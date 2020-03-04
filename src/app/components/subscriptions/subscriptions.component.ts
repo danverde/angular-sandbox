@@ -11,6 +11,7 @@ import { Service2Service } from 'src/app/services/service2.service';
 export class SubscriptionsComponent implements OnInit, OnChanges, OnDestroy {
 
   private data: string;
+  private subscription: Subscription;
   private subscriptions = new Subscription();
 
   constructor(
@@ -27,7 +28,7 @@ export class SubscriptionsComponent implements OnInit, OnChanges, OnDestroy {
     // this.subscriptions.add(this.serviceOne.getData().subscribe(x => console.log(x)));
     // this.subscriptions.add(this.serviceTwo.getData().subscribe(x => this.data = x));
 
-    combineLatest(
+    this.subscription = combineLatest(
       [this.serviceOne.getData(),
       this.serviceTwo.getData()]
     ).subscribe(x => console.log(x)); // prints ['one', 'two']
@@ -39,6 +40,6 @@ export class SubscriptionsComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }
